@@ -399,3 +399,9 @@ group by dg.country_name, dt.year with rollup
 order by dg.country_name, percentage_units_sold desc;
 
 -- -- field
+select dt.day_name, dp.category, count(*) as nreg, sum(fs.profit) as total_profit
+from fact_sales fs
+join dim_time dt on(fs.dim_time_id = dt.time_id)
+join dim_product dp on(fs.dim_product_id = dp.product_id)
+group by dt.day_name, dp.category
+order by field(dt.day_name, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'), dp.category;
